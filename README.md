@@ -2,9 +2,9 @@
 
 A high-performance optimization suite for the [Google Gemini CLI](https://github.com/google-gemini/gemini-cli) on macOS.
 
-## 🌟 The "Night and Day" Discovery
+## 🌟 Infrastructure Optimization Findings
 
-Based on community findings from the "Custom Build" Discord, we have identified that the primary bottleneck in AI Agent performance is not the model speed, but the **Infrastructure Latency**. This repository provides a professional configuration to eliminate "Shell Bloat" and the "Startup Tax" associated with massive Node.js dependency trees.
+We have identified that the primary bottleneck in AI Agent performance is not the model speed, but the **Infrastructure Latency**. This repository provides a professional configuration to eliminate "Shell Bloat" and the "Startup Tax" associated with massive Node.js dependency trees.
 
 ### Performance Benchmarks (Mac M-Series)
 | Metric | Original Build | Supercharged Build | Improvement |
@@ -48,6 +48,3 @@ Run the included optimization script to patch your local `@google/gemini-cli-cor
 
 ## 📄 License
 Apache-2.0
-
-## 🤝 Acknowledgments
-Special thanks to the **Gemini CLI Custom Build** community for the initial findings on Windows sandbox optimizations that inspired this Mac-native implementation.
