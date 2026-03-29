@@ -17,8 +17,8 @@ We have identified that the primary bottleneck in AI Agent performance is not th
 
 ## 🛠 Key Optimizations
 
-### 1. Eliminating the "Startup Tax"
-The standard Gemini CLI installation contains over **43,000 files** in its `node_modules`. Every time the agent "thinks," Node.js crawls this tree. We optimize this by using an automated wrapper that configures the V8 engine for maximum speed and suppresses non-critical warnings.
+### 1. Eliminating the "Startup Tax" (Bun Runtime Injection)
+The standard Gemini CLI installation contains over **43,000 files** in its `node_modules`. Under Node.js, parsing this tree takes nearly 2 seconds. We optimize this by applying a surgical patch to the dynamic WebAssembly imports within the CLI core, allowing it to execute natively on the **Bun runtime**. If Bun is installed, our wrapper intercepts the call and runs it through Bun, slashing startup time by 50%. If Bun is not present, it gracefully falls back to an optimized Node.js V8 configuration.
 
 ### 2. Zero Shell Bloat ("Set and Forget")
 Standard builds often wrap tool calls in multiple layers of `bash -c`. We use a **Surgical Patch** that allows the AI to hit the OS kernel directly. 
