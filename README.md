@@ -51,9 +51,8 @@ source ~/.zshrc
 
 While these optimizations provide a significant performance boost, users should be aware of the following technical considerations:
 
-1.  **Package Updates:** The included wrapper script handles re-patching automatically.
-2.  **Shell Compatibility:** The patch switches the internal command executor from `/bin/bash` to `/bin/zsh`. While Zsh is the default on modern macOS, certain legacy environment-dependent hooks may behave differently.
-3.  **Experimental Status:** These optimizations are community-developed and are not officially supported by Google. Use at your own risk.
+1.  **Shell Compatibility:** The patch switches the internal command executor from `/bin/bash` to `/bin/zsh`. While Zsh is the default on modern macOS, certain legacy environment-dependent hooks may behave differently.
+2.  **Experimental Status:** These optimizations are community-developed and are not officially supported by Google. Use at your own risk.
 
 ---
 
