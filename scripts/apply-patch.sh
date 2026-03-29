@@ -6,8 +6,15 @@
 echo "🔍 Locating Gemini CLI installation..."
 
 # Use npm to find the global root instead of guessing paths
-GLOBAL_ROOT=$(npm root -g)
-TARGET_FILE="$GLOBAL_ROOT/@google/gemini-cli/node_modules/@google/gemini-cli-core/dist/src/utils/shell-utils.js"
+CACHE_FILE="$HOME/.gemini_supercharger_target"
+
+if [ -f "$CACHE_FILE" ]; then
+    TARGET_FILE=$(cat "$CACHE_FILE")
+else
+    GLOBAL_ROOT=$(npm root -g)
+    TARGET_FILE="$GLOBAL_ROOT/@google/gemini-cli/node_modules/@google/gemini-cli-core/dist/src/utils/shell-utils.js"
+    echo "$TARGET_FILE" > "$CACHE_FILE"
+fi
 
 if [ ! -f "$TARGET_FILE" ]; then
     # Fallback search if npm root doesn't find it directly (some setups)
