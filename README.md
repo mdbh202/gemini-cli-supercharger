@@ -47,6 +47,31 @@ source ~/.zshrc
 
 ---
 
+## 🔙 Revert to Normal (Uninstall)
+
+If you ever experience issues or simply want to return to the factory-default Gemini CLI, it's very easy to revert everything:
+
+### Step 1: Run the Uninstall Script
+Run the provided uninstallation script to safely restore your global `node_modules` from the backup and clear the path cache:
+```bash
+bash ~/gemini-cli-supercharger/scripts/uninstall.sh
+```
+
+### Step 2: Remove the Alias
+Open your `~/.zshrc` (or `~/.bashrc`) file and delete the line you added during installation:
+```bash
+# Delete this line:
+alias gemini='~/gemini-cli-supercharger/scripts/gemini-wrapper.sh'
+```
+
+### Step 3: Refresh Terminal
+```bash
+source ~/.zshrc
+```
+Your Gemini CLI will now run exactly as it did before.
+
+---
+
 ## ⚠️ Disclaimer & Risks
 
 While these optimizations provide a significant performance boost, users should be aware of the following technical considerations:
