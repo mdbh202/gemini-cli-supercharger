@@ -1,21 +1,36 @@
 #!/usr/bin/env bash
 
-# Gemini CLI Supercharger - Surgical Patch Script
-# This script optimizes the shell execution path in gemini-cli-core
+# Gemini CLI Supercharger - Universal Mac Patch Script
+# This version works for NVM, Homebrew, and Standard Node installs.
 
-TARGET_FILE=$(find ~/.nvm/versions/node -name "shell-utils.js" | grep "@google/gemini-cli-core" | head -n 1)
+echo "🔍 Locating Gemini CLI installation..."
 
-if [ -z "$TARGET_FILE" ]; then
-    echo "❌ Could not find shell-utils.js in your NVM node_modules."
+# Use npm to find the global root instead of guessing paths
+GLOBAL_ROOT=$(npm root -g)
+TARGET_FILE="$GLOBAL_ROOT/@google/gemini-cli/node_modules/@google/gemini-cli-core/dist/src/utils/shell-utils.js"
+
+if [ ! -f "$TARGET_FILE" ]; then
+    # Fallback search if npm root doesn't find it directly (some setups)
+    TARGET_FILE=$(find "$GLOBAL_ROOT" -name "shell-utils.js" | grep "@google/gemini-cli-core" | head -n 1)
+fi
+
+if [ -z "$TARGET_FILE" ] || [ ! -f "$TARGET_FILE" ]; then
+    echo "❌ Could not find Gemini CLI core files."
+    echo "Make sure you have installed it globally: npm install -g @google/gemini-cli"
     exit 1
 fi
 
 echo "🚀 Found target: $TARGET_FILE"
 
-# Backup original
-cp "$TARGET_FILE" "${TARGET_FILE}.bak"
+# Create a backup if one doesn't exist
+if [ ! -f "${TARGET_FILE}.bak" ]; then
+    cp "$TARGET_FILE" "${TARGET_FILE}.bak"
+    echo "💾 Created backup of original shell-utils.js"
+fi
 
-# Apply optimization (Using zsh for startup speed)
+# Apply the zsh optimization
+# macOS ships with a very old version of Bash (3.2). 
+# Switching to the native Zsh provides better performance and path handling.
 sed -i '' "s/executable: 'bash', argsPrefix: \['-c'\], shell: 'bash'/executable: 'zsh', argsPrefix: \['-c'\], shell: 'bash'/g" "$TARGET_FILE"
 
 echo "✅ Optimization applied successfully!"
