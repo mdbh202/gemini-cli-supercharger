@@ -25,23 +25,23 @@ run_bench() {
     
     echo "=== $LABEL ==="
     
-    # Warm up run (especially for Supercharged path caching)
+    # Warm up run
     echo "Warming up..."
     "$CMD" --version > /dev/null 2>&1
     
     echo "Running $ITERATIONS iterations for Startup Time (--version)..."
     for i in $(seq 1 $ITERATIONS); do
         echo -n "  Run $i: "
-        # We use a subshell to capture time output cleanly
-        { time "$CMD" --version > /dev/null ; } 2>&1 | grep "total" | awk '{print $1}'
+        # Use TIMEFORMAT to get only the real time in seconds
+        ( export TIMEFORMAT='%R'; time "$CMD" --version > /dev/null 2>&1 ) 2>&1
     done
     
     echo ""
-    echo "Running $ITERATIONS iterations for Agent Logic (Mock Task)..."
+    echo "Running $ITERATIONS iterations for Extension Loading (--list-extensions)..."
     for i in $(seq 1 $ITERATIONS); do
         echo -n "  Run $i: "
-        # Use a simple echo task to measure overhead without API latency
-        { time "$CMD" -p "echo 'Benchmarking'" --yolo > /dev/null ; } 2>&1 | grep "total" | awk '{print $1}'
+        # --list-extensions tests the full boot cycle + extension loading without agent loops
+        ( export TIMEFORMAT='%R'; time "$CMD" --list-extensions > /dev/null 2>&1 ) 2>&1
     done
     echo ""
 }
