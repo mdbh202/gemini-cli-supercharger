@@ -47,6 +47,24 @@ source ~/.zshrc
 
 ---
 
+## 🧪 Testing & Verification
+
+We provide a suite of tools to verify your performance gains and ensure the optimizations are healthy:
+
+### 1. Integrity Test
+Verify that all patches (Kernel injection, Path cache, V8 tuning) are correctly applied:
+```bash
+bash ~/gemini-cli-supercharger/scripts/test-integrity.sh
+```
+
+### 2. Performance Benchmark
+Compare your Standard build against the Supercharged build across multiple iterations:
+```bash
+bash ~/gemini-cli-supercharger/scripts/benchmark.sh
+```
+
+---
+
 ## 🔙 Revert to Normal (Uninstall)
 
 If you ever experience issues or simply want to return to the factory-default Gemini CLI, it's very easy to revert everything:
