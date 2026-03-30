@@ -6,26 +6,47 @@
 echo "🔍 Locating Gemini CLI installation..."
 
 CACHE_FILE="$HOME/.gemini_supercharger_target"
+GLOBAL_ROOT=$(npm root -g)
 
 if [ -f "$CACHE_FILE" ]; then
     TARGET_FILE=$(cat "$CACHE_FILE")
 else
-    GLOBAL_ROOT=$(npm root -g)
     TARGET_FILE="$GLOBAL_ROOT/@google/gemini-cli/node_modules/@google/gemini-cli-core/dist/src/utils/shell-utils.js"
 fi
 
 if [ -f "${TARGET_FILE}.bak" ]; then
     echo "🔄 Restoring original shell-utils.js from backup..."
     cp "${TARGET_FILE}.bak" "$TARGET_FILE"
-    echo "✅ Original files restored successfully."
+    echo "✅ Original shell-utils.js restored."
 else
-    echo "⚠️ No backup file found. It may have already been restored or the CLI was reinstalled."
-    # Attempt an in-place revert of the specific zsh patch just in case
-    if [ -f "$TARGET_FILE" ]; then
-         sed -i '' "s/executable: 'zsh', argsPrefix: \['-c'\], shell: 'zsh'/executable: 'bash', argsPrefix: \['-c'\], shell: 'bash'/g" "$TARGET_FILE"
-         echo "✅ In-place revert applied to shell-utils.js."
-    fi
+    echo "⚠️ No backup file found for shell-utils.js."
 fi
+
+# Revert relaunch.js
+RELAUNCH_FILE="$GLOBAL_ROOT/@google/gemini-cli/dist/src/utils/relaunch.js"
+if [ -f "${RELAUNCH_FILE}.bak" ]; then
+    echo "🔄 Restoring original relaunch.js from backup..."
+    cp "${RELAUNCH_FILE}.bak" "$RELAUNCH_FILE"
+    echo "✅ Original relaunch.js restored."
+fi
+
+# Revert storage.js
+STORAGE_FILE="$GLOBAL_ROOT/@google/gemini-cli/node_modules/@google/gemini-cli-core/dist/src/config/storage.js"
+if [ -f "${STORAGE_FILE}.bak" ]; then
+    echo "🔄 Restoring original storage.js from backup..."
+    cp "${STORAGE_FILE}.bak" "$STORAGE_FILE"
+    echo "✅ Original storage.js restored."
+fi
+
+# Revert extensionLoader.js
+LOADER_FILE="$GLOBAL_ROOT/@google/gemini-cli/node_modules/@google/gemini-cli-core/dist/src/utils/extensionLoader.js"
+if [ -f "${LOADER_FILE}.bak" ]; then
+    echo "🔄 Restoring original extensionLoader.js from backup..."
+    cp "${LOADER_FILE}.bak" "$LOADER_FILE"
+    echo "✅ Original extensionLoader.js restored."
+fi
+
+echo "✅ All original files restored successfully."
 
 # Clean up the cache file
 if [ -f "$CACHE_FILE" ]; then
