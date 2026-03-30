@@ -12,7 +12,7 @@ if [ ! -f "$NORMAL_BUILD" ]; then
     NORMAL_BUILD=$(which gemini)
 fi
 
-echo "⏱️  Starting Gemini Supercharger Benchmark..."
+echo "Starting Gemini Supercharger Benchmark..."
 echo "Standard:     $NORMAL_BUILD"
 echo "Supercharged: $SUPERCHARGED_WRAPPER"
 echo ""
@@ -52,8 +52,6 @@ run_bench "Standard Build" "$NORMAL_BUILD"
 # 2. Test Supercharged Build
 run_bench "Supercharged Build" "$SUPERCHARGED_WRAPPER"
 
-echo "✅ Benchmark complete!"
-echo "💡 Tip: Compare the 'real' time across runs. Smaller is better."
+echo "Benchmark complete."
+echo "Tip: Compare the 'real' time across runs. Smaller is better."
 echo "Supercharged should consistently show 30-50% improvement in startup."
-
-

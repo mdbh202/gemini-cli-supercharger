@@ -18,7 +18,7 @@ fi
 # 2. Quick Check: Is the optimization active?
 # We check if the file still contains 'bash' as the executable
 if [ -f "$TARGET_FILE" ] && grep -q "executable: 'bash'" "$TARGET_FILE"; then
-    echo "⚙️  Update detected! Re-applying Gemini Supercharger..."
+    echo "Update detected. Re-applying Gemini Supercharger..."
     
     # Run the patch script silently
     "$(dirname "$0")/apply-patch.sh" > /dev/null 2>&1
